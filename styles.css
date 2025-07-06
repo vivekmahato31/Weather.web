@@ -32,6 +32,7 @@ body {
   border-radius: 20px;
   padding: 40px;
   width: 400px;
+  max-width: 90%;
   color: #fff;
 }
 
@@ -41,7 +42,8 @@ body {
 }
 
 .search input {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   padding: 15px 20px;
   border-radius: 30px;
   border: none;
@@ -51,39 +53,84 @@ body {
 .search button {
   background: #fff3;
   border: none;
-  border-radius: 30px; /* 👈 changed from 50% to 30px */
-  padding: 0 20px;      /* 👈 better spacing */
-  height: auto;         /* 👈 let flex control height */
-  margin-left: 10px;
+  border-radius: 30px;
+  padding: 0 20px;
   cursor: pointer;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 10px;
+  white-space: nowrap;
 }
 
-/* Optional: make icon size more balanced */
 .search button i {
   font-size: 18px;
 }
 
-/* Responsive: stack input & button on small screens */
+.weather-icon {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.weather-icon img {
+  width: 100px;
+}
+
+.temp {
+  text-align: center;
+  font-size: 50px;
+}
+
+.city {
+  text-align: center;
+  font-size: 30px;
+}
+
+.weather-desc {
+  text-align: center;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.col i {
+  font-size: 28px;
+}
+
+.text p:first-child {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.text p:last-child {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Responsive: stack input & button nicely on tiny screens */
 @media (max-width: 480px) {
-  .card {
-    width: 90%;
-    padding: 20px;
-  }
   .search {
     flex-direction: column;
-    gap: 10px;
   }
   .search input {
-    border-radius: 30px;
     width: 100%;
+    margin-bottom: 10px;
   }
   .search button {
     width: 100%;
-    border-radius: 30px;
     padding: 12px 0;
+    margin-left: 0;
   }
 }
