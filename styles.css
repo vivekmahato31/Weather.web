@@ -1,3 +1,13 @@
+:root {
+  --bg: rgba(0, 0, 0, 0.3);
+  --text: #fff;
+}
+
+[data-theme="light"] {
+  --bg: rgba(255, 255, 255, 0.6);
+  --text: #000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +18,7 @@
 body {
   min-height: 100vh;
   overflow: hidden;
+  color: var(--text);
 }
 
 .background-video {
@@ -19,6 +30,22 @@ body {
   z-index: -1;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.theme-toggle button {
+  background: #fff5;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -27,15 +54,13 @@ body {
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg);
   backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 40px;
   width: 400px;
   max-width: 90%;
-  color: #fff;
 }
-
 
 .search {
   position: relative;
@@ -44,14 +69,14 @@ body {
 
 .search input {
   width: 100%;
-  padding: 15px 60px 15px 40px;
+  padding: 15px 100px 15px 40px;
   border-radius: 30px;
   border: none;
   outline: none;
   text-transform: capitalize;
 }
 
-.search .input-icon {
+.input-icon {
   position: absolute;
   top: 50%;
   left: 15px;
@@ -62,7 +87,7 @@ body {
 .search button {
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 50px;
   transform: translateY(-50%);
   background: #ffffff33;
   border: none;
@@ -70,10 +95,14 @@ body {
   width: 40px;
   height: 40px;
   cursor: pointer;
-  color: #000;
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#voiceBtn {
+  right: 5px;
 }
 
 .hint {
@@ -144,11 +173,26 @@ body {
   opacity: 0.8;
 }
 
+.forecast {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 10px;
+}
+
+.forecast-card {
+  background: #ffffff22;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
 .error-msg {
   text-align: center;
   color: #f55;
   margin-top: 15px;
 }
+
 
 .loader {
   position: fixed;
