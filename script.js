@@ -43,7 +43,6 @@ async function checkWeather(city) {
     const condition = getCondition(data.weather[0].main);
     weatherIcon.src = `assets/images/${condition}.png`;
 
-    
     weatherVideo.src = videos[condition];
     weatherVideo.play();
   }
