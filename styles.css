@@ -1,17 +1,17 @@
 :root {
-  --bg: rgba(0, 0, 0, 0.3);
-  --text: #fff;
+  --bg: rgba(255, 255, 255, 0.2);
+  --text: #000;
   --btn-bg: #000;
   --btn-icon: #fff;
   --btn-bg-hover: #000000cc;
 }
 
-[data-theme="light"] {
-  --bg: rgba(255, 255, 255, 0.6);
-  --text: #000;
-  --btn-bg: #000;
-  --btn-icon: #fff;
-  --btn-bg-hover: #000000cc;
+html:not([data-theme="light"]) {
+  --bg: rgba(0, 0, 0, 0.2);
+  --text: #fff;
+  --btn-bg: #fff;
+  --btn-icon: #000;
+  --btn-bg-hover: #ffffffcc;
 }
 
 * {
@@ -23,8 +23,8 @@
 
 body {
   min-height: 100vh;
-  overflow: hidden;
   color: var(--text);
+  overflow-x: hidden;
 }
 
 .background-video {
@@ -59,8 +59,7 @@ body {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-color: #ccc;
   transition: .4s;
   border-radius: 34px;
@@ -68,16 +67,13 @@ body {
 
 .slider:before {
   position: absolute;
-  content: "🌙";
+  content: "☀️";
   height: 26px; width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
+  left: 4px; bottom: 4px;
+  background: white;
   transition: .4s;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-size: 16px;
 }
 
@@ -87,15 +83,15 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(26px);
-  content: "☀️";
+  content: "🌙";
 }
 
 .container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 100vh;
-  padding: 60px 20px;
+  min-height: calc(100vh - 60px);
+  padding: 150px 20px 80px;
   overflow-y: auto;
 }
 
@@ -106,7 +102,6 @@ input:checked + .slider:before {
   padding: 40px;
   width: 400px;
   max-width: 100%;
-  margin-bottom: 60px;
 }
 
 .search {
@@ -120,7 +115,6 @@ input:checked + .slider:before {
   border-radius: 30px;
   border: none;
   outline: none;
-  text-transform: capitalize;
 }
 
 .search button {
@@ -137,7 +131,6 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease;
 }
 
 .search button:hover {
@@ -207,12 +200,36 @@ input:checked + .slider:before {
   opacity: 0.8;
 }
 
+.forecast {
+  margin-top: 20px;
+}
+
+.forecast-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.forecast-day {
+  flex: 1 1 calc(50% - 10px);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--btn-icon);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 10px;
+  color: var(--text);
+  font-size: 14px;
+}
+
 .loader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
   display: none;
   justify-content: center;
@@ -230,29 +247,28 @@ input:checked + .slider:before {
   animation: spin 1s linear infinite;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .listening {
   position: fixed;
-  bottom: 50px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   background: #000;
   color: #fff;
-  padding: 10px 20px;
+  padding: 15px 30px;
   border-radius: 50px;
   display: none;
   z-index: 1000;
   font-weight: bold;
+  font-size: 18px;
   animation: pulse 1s infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(0,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
 }

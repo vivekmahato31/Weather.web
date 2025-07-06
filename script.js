@@ -1,5 +1,6 @@
 const apiKey = "730434b37d0227b78d93b3c43194acaa";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metric&q=";
 
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button:nth-of-type(1)");
@@ -9,6 +10,7 @@ const weatherVideo = document.getElementById("weatherVideo");
 const loader = document.querySelector(".loader");
 const themeToggle = document.getElementById("themeToggle");
 const listening = document.querySelector(".listening");
+const forecastContainer = document.querySelector(".forecast-container");
 
 const videos = {
   clear: "assets/videos/clear.mp4",
@@ -34,10 +36,13 @@ function getCondition(main) {
 async function checkWeather(city) {
   loader.style.display = "flex";
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+  const forecastRes = await fetch(forecastUrl + city + `&appid=${apiKey}`);
   if (response.status == 404) {
     alert("Invalid City Name");
   } else {
     const data = await response.json();
+    const forecastData = await forecastRes.json();
+
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
     document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
@@ -48,6 +53,22 @@ async function checkWeather(city) {
     weatherVideo.src = videos[condition];
     weatherVideo.play();
     document.querySelector(".weather").classList.add("active");
+
+    const daily = [];
+    forecastData.list.forEach(item => {
+      const date = item.dt_txt.split(" ")[0];
+      if (!daily.find(d => d.date === date)) {
+        daily.push({ date, temp: item.main.temp, desc: item.weather[0].main });
+      }
+    });
+
+    forecastContainer.innerHTML = "";
+    daily.slice(1, 6).forEach(day => {
+      const div = document.createElement("div");
+      div.className = "forecast-day";
+      div.innerHTML = `<h4>${day.date}</h4><p>${Math.round(day.temp)}°C</p><p>${day.desc}</p>`;
+      forecastContainer.appendChild(div);
+    });
   }
   loader.style.display = "none";
 }
@@ -59,10 +80,6 @@ searchBtn.addEventListener("click", () => {
 searchBox.addEventListener("keypress", (e) => {
   if (e.key === "Enter" && searchBox.value.trim() !== "") checkWeather(searchBox.value);
 });
-
-if (!themeToggle.checked) {
-  document.documentElement.removeAttribute("data-theme");
-}
 
 themeToggle.addEventListener("change", () => {
   if (themeToggle.checked) {

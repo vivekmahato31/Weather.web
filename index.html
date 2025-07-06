@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,7 +15,7 @@
 
   <div class="theme-toggle">
     <label class="switch">
-      <input type="checkbox" id="themeToggle" checked>
+      <input type="checkbox" id="themeToggle">
       <span class="slider"></span>
     </label>
   </div>
@@ -23,7 +23,7 @@
   <div class="container">
     <div class="card">
       <div class="search">
-        <input type="text" placeholder="Enter the city name" spellcheck="false" />
+        <input type="text" placeholder="Enter city name" spellcheck="false" />
         <button><i class="fas fa-search"></i></button>
         <button id="voiceBtn"><i class="fas fa-microphone"></i></button>
       </div>
@@ -50,12 +50,23 @@
             </div>
           </div>
         </div>
+
+        <div class="forecast">
+          <h3>5 Day Forecast</h3>
+          <div class="forecast-container"></div>
+        </div>
       </div>
     </div>
   </div>
 
+  <footer>
+    <p>© 2025 Weather App by Vivek Mahato | All Rights Reserved</p>
+  </footer>
+
   <div class="loader"></div>
-  <div class="listening">Listening...</div>
+  <div class="listening">
+    <i class="fas fa-microphone"></i> Listening...
+  </div>
 
   <script src="script.js"></script>
 </body>
