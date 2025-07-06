@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App | Vivek</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+</head>
+<body>
+  <!-- Weather BG Video -->
+  <video autoplay muted loop id="weatherVideo" class="background-video">
+    <source src="assets/videos/clear.mp4" type="video/mp4" />
+  </video>
+
+  <div class="container">
+    <div class="card">
+      <div class="search">
+        <input type="text" placeholder="Enter the city name" spellcheck="false" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+      <div class="weather">
+        <div class="weather-icon">
+          <img src="assets/images/clear.png" alt="Weather Icon" />
+        </div>
+        <h1 class="temp">22°C</h1>
+        <h2 class="city">Your City</h2>
+        <p class="weather-desc">Clear</p>
+        <div class="details">
+          <div class="col">
+            <i class="fas fa-tint"></i>
+            <div class="text">
+              <p class="humidity">50%</p>
+              <p>Humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <i class="fas fa-wind"></i>
+            <div class="text">
+              <p class="wind">13 km/h</p>
+              <p>Wind Speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
