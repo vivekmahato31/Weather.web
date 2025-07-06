@@ -27,35 +27,44 @@ body {
 }
 
 .card {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 40px;
   width: 400px;
+  max-width: 90%;
   color: #fff;
 }
 
+/* ✅ Google-style search bar */
 .search {
-  display: flex;
+  position: relative;
   margin-bottom: 20px;
 }
 
 .search input {
-  flex: 1;
-  padding: 15px 20px;
+  width: 100%;
+  padding: 15px 60px 15px 20px; /* right padding for button space */
   border-radius: 30px;
   border: none;
   outline: none;
 }
 
 .search button {
-  background: #fff3;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: #ffffff33; /* same as #fff3 */
   border: none;
   border-radius: 50%;
-  width: 50px; height: 50px;
-  margin-left: 10px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  color: #fff;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .weather-icon {
