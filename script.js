@@ -5,6 +5,7 @@ const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon img");
 const weatherVideo = document.getElementById("weatherVideo");
+const loader = document.getElementById("loader");
 
 const videos = {
   clear: "assets/videos/clear.mp4",
@@ -28,8 +29,11 @@ function getCondition(main) {
 }
 
 async function checkWeather(city) {
+  loader.style.display = "flex"; // Show loader
+
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
   if (response.status == 404) {
+    loader.style.display = "none";
     alert("Invalid City Name");
   } else {
     const data = await response.json();
@@ -45,6 +49,8 @@ async function checkWeather(city) {
 
     weatherVideo.src = videos[condition];
     weatherVideo.play();
+
+    loader.style.display = "none"; // Hide loader after success
   }
 }
 
@@ -52,6 +58,7 @@ searchBtn.addEventListener("click", () => {
   checkWeather(searchBox.value);
 });
 
+// Enter/Go key support
 searchBox.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     checkWeather(searchBox.value);

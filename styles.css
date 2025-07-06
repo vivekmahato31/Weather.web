@@ -36,7 +36,7 @@ body {
   color: #fff;
 }
 
-/* ✅ Google-style search bar */
+/* Google-style search bar */
 .search {
   position: relative;
   margin-bottom: 20px;
@@ -44,7 +44,7 @@ body {
 
 .search input {
   width: 100%;
-  padding: 15px 60px 15px 20px; /* right padding for button space */
+  padding: 15px 60px 15px 20px;
   border-radius: 30px;
   border: none;
   outline: none;
@@ -55,13 +55,13 @@ body {
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  background: #ffffff33; /* same as #fff3 */
+  background: #ffffff33;
   border: none;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   cursor: pointer;
-  color: #000;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,4 +116,33 @@ body {
 .text p:last-child {
   font-size: 14px;
   opacity: 0.8;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none; 
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  border: 5px solid #fff;
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
