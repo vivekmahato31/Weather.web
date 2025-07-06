@@ -1,16 +1,11 @@
 const apiKey = "730434b37d0227b78d93b3c43194acaa";
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metric&q=";
+const apiUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metric&q=";
 
 const searchBox = document.querySelector(".search input");
-const searchBtn = document.querySelector(".search button:nth-of-type(1)");
-const voiceBtn = document.getElementById("voiceBtn");
+const searchBtn = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon img");
 const weatherVideo = document.getElementById("weatherVideo");
-const loader = document.querySelector(".loader");
-const themeToggle = document.getElementById("themeToggle");
-const listening = document.querySelector(".listening");
-const forecastContainer = document.querySelector(".forecast-container");
+const forecastContainer = document.querySelector('.forecast-container');
 
 const videos = {
   clear: "assets/videos/clear.mp4",
@@ -34,78 +29,87 @@ function getCondition(main) {
 }
 
 async function checkWeather(city) {
+  const loader = document.querySelector('.loader');
   loader.style.display = "flex";
+
   const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
-  const forecastRes = await fetch(forecastUrl + city + `&appid=${apiKey}`);
   if (response.status == 404) {
+    loader.style.display = "none";
     alert("Invalid City Name");
   } else {
     const data = await response.json();
-    const forecastData = await forecastRes.json();
 
-    document.querySelector(".city").innerHTML = data.name;
-    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
-    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-    document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-    document.querySelector(".weather-desc").innerHTML = data.weather[0].main;
-    const condition = getCondition(data.weather[0].main);
+    document.querySelector(".city").innerHTML = data.city.name;
+    document.querySelector(".temp").innerHTML = Math.round(data.list[0].main.temp) + "°C";
+    document.querySelector(".humidity").innerHTML = data.list[0].main.humidity + "%";
+    document.querySelector(".wind").innerHTML = data.list[0].wind.speed + " km/h";
+    document.querySelector(".weather-desc").innerHTML = data.list[0].weather[0].main;
+
+    const condition = getCondition(data.list[0].weather[0].main);
     weatherIcon.src = `assets/images/${condition}.png`;
     weatherVideo.src = videos[condition];
     weatherVideo.play();
-    document.querySelector(".weather").classList.add("active");
 
-    const daily = [];
-    forecastData.list.forEach(item => {
-      const date = item.dt_txt.split(" ")[0];
-      if (!daily.find(d => d.date === date)) {
-        daily.push({ date, temp: item.main.temp, desc: item.weather[0].main });
+    
+    forecastContainer.innerHTML = '';
+    const usedDays = [];
+    for (let i = 0; i < data.list.length; i++) {
+      const date = new Date(data.list[i].dt * 1000);
+      const day = date.toLocaleDateString(undefined, { weekday: 'short' });
+      if (!usedDays.includes(day)) {
+        usedDays.push(day);
+        const temp = data.list[i].main.temp;
+        const condition = getCondition(data.list[i].weather[0].main);
+
+        forecastContainer.innerHTML += `
+          <div class="forecast-day">
+            <img src="assets/images/${condition}.png" alt="icon" />
+            <p>${day}</p>
+            <p>${Math.round(temp)}°C</p>
+          </div>
+        `;
       }
-    });
+      if (usedDays.length === 5) break;
+    }
 
-    forecastContainer.innerHTML = "";
-    daily.slice(1, 6).forEach(day => {
-      const div = document.createElement("div");
-      div.className = "forecast-day";
-      div.innerHTML = `<h4>${day.date}</h4><p>${Math.round(day.temp)}°C</p><p>${day.desc}</p>`;
-      forecastContainer.appendChild(div);
-    });
+    document.querySelector(".weather").classList.add("active");
+    loader.style.display = "none";
   }
-  loader.style.display = "none";
 }
 
 searchBtn.addEventListener("click", () => {
-  if (searchBox.value.trim() !== "") checkWeather(searchBox.value);
+  checkWeather(searchBox.value);
 });
 
-searchBox.addEventListener("keypress", (e) => {
-  if (e.key === "Enter" && searchBox.value.trim() !== "") checkWeather(searchBox.value);
-});
-
-themeToggle.addEventListener("change", () => {
-  if (themeToggle.checked) {
-    document.documentElement.removeAttribute("data-theme");
-  } else {
-    document.documentElement.setAttribute("data-theme", "light");
+searchBox.addEventListener("keypress", e => {
+  if (e.key === "Enter") {
+    checkWeather(searchBox.value);
   }
 });
+
+// Voice search
+const voiceBtn = document.getElementById("voiceBtn");
+const listening = document.querySelector('.listening');
+const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 
 voiceBtn.addEventListener("click", () => {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (SpeechRecognition) {
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.start();
-    listening.style.display = "block";
-    recognition.onresult = function (event) {
-      const transcript = event.results[0][0].transcript;
-      searchBox.value = transcript;
-      checkWeather(transcript);
-      listening.style.display = "none";
-    };
-    recognition.onend = function () {
-      listening.style.display = "none";
-    };
-  } else {
-    alert("Speech Recognition not supported in this browser.");
-  }
+  recognition.start();
+  listening.style.display = "block";
+});
+
+recognition.onresult = (event) => {
+  const city = event.results[0][0].transcript;
+  searchBox.value = city;
+  checkWeather(city);
+  listening.style.display = "none";
+};
+
+recognition.onend = () => {
+  listening.style.display = "none";
+};
+
+// Theme toggle
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("change", () => {
+  document.documentElement.setAttribute("data-theme", themeToggle.checked ? "dark" : "light");
 });

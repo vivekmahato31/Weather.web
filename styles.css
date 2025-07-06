@@ -1,6 +1,6 @@
 :root {
   --bg: rgba(255, 255, 255, 0.2);
-  --text: #000;
+  --text: #fff;
   --btn-bg: #000;
   --btn-icon: #fff;
   --btn-bg-hover: #000000cc;
@@ -204,6 +204,10 @@ input:checked + .slider:before {
   margin-top: 20px;
 }
 
+.forecast h3 {
+  margin-bottom: 15px;
+}
+
 .forecast-container {
   display: flex;
   flex-wrap: wrap;
@@ -213,16 +217,21 @@ input:checked + .slider:before {
 .forecast-day {
   flex: 1 1 calc(50% - 10px);
   background: rgba(0, 0, 0, 0.3);
-  color: var(--btn-icon);
+  color: #fff;
   padding: 10px;
   border-radius: 8px;
   text-align: center;
 }
 
+.forecast-day img {
+  width: 40px;
+  margin-bottom: 5px;
+}
+
 footer {
   text-align: center;
   padding: 20px 10px;
-  color: var(--text);
+  color: #fff;
   font-size: 14px;
 }
 
