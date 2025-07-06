@@ -1,11 +1,17 @@
 :root {
   --bg: rgba(0, 0, 0, 0.3);
   --text: #fff;
+  --btn-bg: #fff;      
+  --btn-icon: #000;    
+  --btn-bg-hover: #000000cc; 
 }
 
 [data-theme="light"] {
   --bg: rgba(255, 255, 255, 0.6);
   --text: #000;
+  --btn-bg: #fff;      
+  --btn-icon: #000;   
+  --btn-bg-hover: #000000cc;
 }
 
 * {
@@ -38,12 +44,16 @@ body {
 }
 
 .theme-toggle button {
-  background: #fff5;
+  background: var(--btn-bg);
   border: none;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   cursor: pointer;
+  color: var(--btn-icon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -89,16 +99,21 @@ body {
   top: 50%;
   right: 50px;
   transform: translateY(-50%);
-  background: #ffffff33;
+  background: var(--btn-bg);
   border: none;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   cursor: pointer;
-  color: var(--text);
+  color: var(--btn-icon);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.search button:hover {
+  background: var(--btn-bg-hover);
 }
 
 #voiceBtn {
@@ -193,7 +208,7 @@ body {
   margin-top: 15px;
 }
 
-
+/* Loader styles */
 .loader {
   position: fixed;
   top: 0;
