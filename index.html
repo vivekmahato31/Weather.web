@@ -5,31 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Weather App | Vivek Mahato</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="manifest" href="manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  <link rel="icon" href="assets/images/clear.png" />
 </head>
 <body>
-  <!-- Weather BG Video -->
-  <video autoplay muted loop id="weatherVideo" class="background-video" preload="metadata">
+  <video autoplay muted loop id="weatherVideo" class="background-video">
     <source src="assets/videos/clear.mp4" type="video/mp4" />
   </video>
 
   <div class="theme-toggle">
-    <button id="themeToggle">🌙</button>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle" checked>
+      <span class="slider"></span>
+    </label>
   </div>
 
   <div class="container">
     <div class="card">
       <div class="search">
-        <i class="fas fa-location-dot input-icon"></i>
-        <input type="text" placeholder="Enter city name" spellcheck="false" autofocus />
+        <input type="text" placeholder="Enter the city name" spellcheck="false" />
         <button><i class="fas fa-search"></i></button>
         <button id="voiceBtn"><i class="fas fa-microphone"></i></button>
       </div>
-      <small class="hint">Press Enter or tap Search</small>
-
       <div class="weather">
         <div class="weather-icon">
           <img src="assets/images/clear.png" alt="Weather Icon" />
@@ -54,15 +51,11 @@
           </div>
         </div>
       </div>
-
-      <div class="forecast">
-      </div>
-
-      <p class="error-msg"></p>
     </div>
   </div>
 
-  <div class="loader" id="loader"></div>
+  <div class="loader"></div>
+  <div class="listening">Listening...</div>
 
   <script src="script.js"></script>
 </body>

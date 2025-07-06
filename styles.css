@@ -1,16 +1,16 @@
 :root {
   --bg: rgba(0, 0, 0, 0.3);
   --text: #fff;
-  --btn-bg: #fff;      
-  --btn-icon: #000;    
-  --btn-bg-hover: #000000cc; 
+  --btn-bg: #000;
+  --btn-icon: #fff;
+  --btn-bg-hover: #000000cc;
 }
 
 [data-theme="light"] {
   --bg: rgba(255, 255, 255, 0.6);
   --text: #000;
-  --btn-bg: #fff;      
-  --btn-icon: #000;   
+  --btn-bg: #000;
+  --btn-icon: #fff;
   --btn-bg-hover: #000000cc;
 }
 
@@ -38,29 +38,65 @@ body {
 
 .theme-toggle {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   z-index: 10;
 }
 
-.theme-toggle button {
-  background: var(--btn-bg);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
   cursor: pointer;
-  color: var(--btn-icon);
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "🌙";
+  height: 26px; width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 16px;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+  content: "☀️";
 }
 
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
+  padding: 60px 20px;
+  overflow-y: auto;
 }
 
 .card {
@@ -69,7 +105,8 @@ body {
   border-radius: 20px;
   padding: 40px;
   width: 400px;
-  max-width: 90%;
+  max-width: 100%;
+  margin-bottom: 60px;
 }
 
 .search {
@@ -86,18 +123,9 @@ body {
   text-transform: capitalize;
 }
 
-.input-icon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  color: #aaa;
-}
-
 .search button {
   position: absolute;
   top: 50%;
-  right: 50px;
   transform: translateY(-50%);
   background: var(--btn-bg);
   border: none;
@@ -116,17 +144,8 @@ body {
   background: var(--btn-bg-hover);
 }
 
-#voiceBtn {
-  right: 5px;
-}
-
-.hint {
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.7;
-  display: block;
-  margin-bottom: 10px;
-}
+.search button:nth-of-type(1) { right: 50px; }
+#voiceBtn { right: 5px; }
 
 .weather {
   opacity: 0;
@@ -188,27 +207,6 @@ body {
   opacity: 0.8;
 }
 
-.forecast {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 10px;
-}
-
-.forecast-card {
-  background: #ffffff22;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.error-msg {
-  text-align: center;
-  color: #f55;
-  margin-top: 15px;
-}
-
-/* Loader styles */
 .loader {
   position: fixed;
   top: 0;
@@ -232,8 +230,29 @@ body {
   animation: spin 1s linear infinite;
 }
 
+.listening {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: none;
+  z-index: 1000;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
