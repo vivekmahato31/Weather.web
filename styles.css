@@ -42,8 +42,8 @@ body {
 }
 
 .search input {
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1 1 auto;  /* allow grow & shrink */
+  min-width: 0;    /* prevent overflow */
   padding: 15px 20px;
   border-radius: 30px;
   border: none;
@@ -53,19 +53,15 @@ body {
 .search button {
   background: #fff3;
   border: none;
-  border-radius: 30px;
-  padding: 0 20px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
   cursor: pointer;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
-  white-space: nowrap;
-}
-
-.search button i {
-  font-size: 18px;
 }
 
 .weather-icon {
@@ -119,18 +115,4 @@ body {
   opacity: 0.8;
 }
 
-/* Responsive: stack input & button nicely on tiny screens */
-@media (max-width: 480px) {
-  .search {
-    flex-direction: column;
-  }
-  .search input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  .search button {
-    width: 100%;
-    padding: 12px 0;
-    margin-left: 0;
-  }
-}
+/* No stacking, keep as is */
