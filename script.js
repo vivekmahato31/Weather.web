@@ -49,33 +49,28 @@ async function checkWeather(city) {
   errorMessage.innerHTML = "";
 
   try {
-    // Live weather
     const weatherRes = await fetch(weatherApiUrl + city + `&appid=${apiKey}`);
     if (!weatherRes.ok) throw new Error("City not found");
     const weatherData = await weatherRes.json();
 
-    // Forecast
     const forecastRes = await fetch(forecastApiUrl + city + `&appid=${apiKey}`);
     if (!forecastRes.ok) throw new Error("City not found");
     const forecastData = await forecastRes.json();
 
     localStorage.setItem("lastCity", city);
 
-    // Update live card
     document.querySelector(".city").innerHTML = capitalize(weatherData.name);
     document.querySelector(".temp").innerHTML = getUnitTemp(weatherData.main.temp);
     document.querySelector(".humidity").innerHTML = weatherData.main.humidity + "%";
     document.querySelector(".wind").innerHTML = weatherData.wind.speed + " km/h";
     document.querySelector(".weather-desc").innerHTML = weatherData.weather[0].main;
 
-    // Background
     const condition = getCondition(weatherData.weather[0].main);
     const hour = new Date().getHours();
     weatherVideo.src = (hour >= 19 || hour <= 5) ? videos.night : videos[condition];
     weatherIcon.src = `assets/images/${condition}.png`;
     weatherVideo.play();
 
-    // Forecast
     forecastContainer.innerHTML = '';
     const usedDays = [];
     const today = new Date().toLocaleDateString(undefined, { weekday: 'short' });
@@ -106,7 +101,6 @@ async function checkWeather(city) {
   loader.style.display = "none";
 }
 
-// Auto detect user location
 function getUserLocation() {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -137,7 +131,6 @@ searchBox.addEventListener("keypress", e => {
   }
 });
 
-// Voice
 const voiceBtn = document.getElementById("voiceBtn");
 const listening = document.querySelector('.listening');
 const stopListeningBtn = document.getElementById("stopListening");
@@ -163,13 +156,11 @@ recognition.onend = () => {
   listening.style.display = "none";
 };
 
-// Theme toggle
 const themeToggle = document.getElementById("themeToggle");
 themeToggle.addEventListener("change", () => {
   document.documentElement.setAttribute("data-theme", themeToggle.checked ? "dark" : "light");
 });
 
-// Unit toggle
 unitToggle.addEventListener("change", () => {
   isFahrenheit = unitToggle.checked;
   if (localStorage.getItem("lastCity")) {
@@ -177,8 +168,10 @@ unitToggle.addEventListener("change", () => {
   }
 });
 
-// Loader on page load
+// ✅ FINAL: Wait for video to fully load
 window.addEventListener("load", () => {
-  fullLoader.style.display = "none";
-  getUserLocation();
+  weatherVideo.addEventListener("canplaythrough", () => {
+    fullLoader.style.display = "none";
+    getUserLocation();
+  });
 });
