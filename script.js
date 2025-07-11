@@ -156,6 +156,11 @@ recognition.onend = () => {
   listening.style.display = "none";
 };
 
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("change", () => {
+  document.documentElement.setAttribute("data-theme", themeToggle.checked ? "dark" : "light");
+});
+
 unitToggle.addEventListener("change", () => {
   isFahrenheit = unitToggle.checked;
   if (localStorage.getItem("lastCity")) {
