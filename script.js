@@ -156,11 +156,6 @@ recognition.onend = () => {
   listening.style.display = "none";
 };
 
-const themeToggle = document.getElementById("themeToggle");
-themeToggle.addEventListener("change", () => {
-  document.documentElement.setAttribute("data-theme", themeToggle.checked ? "dark" : "light");
-});
-
 unitToggle.addEventListener("change", () => {
   isFahrenheit = unitToggle.checked;
   if (localStorage.getItem("lastCity")) {
@@ -168,10 +163,7 @@ unitToggle.addEventListener("change", () => {
   }
 });
 
-// ✅ FINAL: Wait for video to fully load
 window.addEventListener("load", () => {
-  weatherVideo.addEventListener("canplaythrough", () => {
-    fullLoader.style.display = "none";
-    getUserLocation();
-  });
+  fullLoader.style.display = "none";
+  getUserLocation();
 });
