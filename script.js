@@ -121,6 +121,25 @@ function getUserLocation() {
   }
 }
 
+searchBox.addEventListener("focus", () => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+      const data = await response.json();
+
+      const cityName = data.name;
+      searchBox.value = cityName;
+
+      checkWeather(cityName);
+    }, (err) => {
+      console.log("Location access denied or error:", err);
+    });
+  }
+});
+
 searchBtn.addEventListener("click", () => {
   checkWeather(searchBox.value);
 });
@@ -155,11 +174,6 @@ recognition.onresult = (event) => {
 recognition.onend = () => {
   listening.style.display = "none";
 };
-
-const themeToggle = document.getElementById("themeToggle");
-themeToggle.addEventListener("change", () => {
-  document.documentElement.setAttribute("data-theme", themeToggle.checked ? "dark" : "light");
-});
 
 unitToggle.addEventListener("change", () => {
   isFahrenheit = unitToggle.checked;
